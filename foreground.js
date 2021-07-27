@@ -23,7 +23,7 @@ function getWeapon(){
     let weapon = {
         "weapon_element":weapon_element,
         "weapon_trait1_type":transformWeaponTraitType(weapon_trait1_type),
-        "weapon_trait1_mod":weapon_trait1_mod,
+        "weapon_trait1_mod":parseFloat(weapon_trait1_mod.replace(",","").replace(".","")),
         "bonus_power":0
     }
     return weapon;
@@ -51,7 +51,7 @@ function getChar(){
     let power = document.getElementsByClassName("subtext-stats")[0].childNodes[5].innerHTML;
     let char_type = document.getElementsByClassName("name bold character-name")[0].childNodes[1].className.split("-icon")[0];
     let character = {
-        "power": power,
+        "power": parseFloat(power.replace(",","").replace(".","")),
         "char_type":char_type
     }
     return character
@@ -66,7 +66,7 @@ function getEnemies(){
         let enemy_power = htmlObject.getElementsByClassName("encounter-power")[0].innerHTML.split(" ")[1];
         let enemy = {
             "enemy_type":enemy_type,
-            "enemy_power":enemy_power,
+            "enemy_power":parseFloat(enemy_power.replace(",","").replace(".","")),
             "victory_prob":0,
             "htmlObject":htmlObject
         }
