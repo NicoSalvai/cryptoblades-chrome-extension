@@ -172,7 +172,7 @@ element = document.getElementById("prob-calc-button-extension");
 if(typeof(element) == 'undefined' || element == null){
     let character_name_span = document.getElementsByClassName("character-list")[0];
 
-    console.log(character_name_span.childNodes[0]);
+    console.log("injected");
 
     var li = document.createElement("li");
     li.classList.add("character");
