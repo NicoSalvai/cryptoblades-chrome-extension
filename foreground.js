@@ -18,12 +18,32 @@ function showProbs(){
 function getWeapon(){
     let aux_weapon = document.getElementsByClassName("weapon-icon-wrapper")[0];
     let weapon_element = aux_weapon.getElementsByClassName("trait")[0].childNodes[0].className.replace("-icon","");
+    
     let weapon_trait1_type = aux_weapon.getElementsByClassName("stats")[0].childNodes[0].childNodes[0].className.split(" ")[2].replace("-icon","");
-    let weapon_trait1_mod = aux_weapon.getElementsByClassName(weapon_trait1_type)[0].innerHTML.split("+")[1];
+    let weapon_trait1_mod = aux_weapon.getElementsByClassName("stats")[0].childNodes[0].childNodes[1].innerHTML.split("+")[1];
+    
+    let weapon_trait2_type = "none";
+    let weapon_trait2_mod = "0";
+    if(aux_weapon.getElementsByClassName("stats")[0].childNodes[1].hasChildNodes()){
+        weapon_trait2_type = aux_weapon.getElementsByClassName("stats")[0].childNodes[1].childNodes[0].className.split(" ")[2].replace("-icon","");
+        weapon_trait2_mod = aux_weapon.getElementsByClassName("stats")[0].childNodes[1].childNodes[1].innerHTML.split("+")[1];
+    }
+
+    let weapon_trait3_type = "none";
+    let weapon_trait3_mod = "0";
+    if(aux_weapon.getElementsByClassName("stats")[0].childNodes[2].hasChildNodes()){
+        weapon_trait3_type = aux_weapon.getElementsByClassName("stats")[0].childNodes[2].childNodes[0].className.split(" ")[2].replace("-icon","");
+        weapon_trait3_mod = aux_weapon.getElementsByClassName("stats")[0].childNodes[2].childNodes[1].innerHTML.split("+")[1];
+    }
+
     let weapon = {
         "weapon_element":weapon_element,
         "weapon_trait1_type":transformWeaponTraitType(weapon_trait1_type),
         "weapon_trait1_mod":parseFloat(weapon_trait1_mod.replace(",","").replace(".","")),
+        "weapon_trait2_type":transformWeaponTraitType(weapon_trait2_type),
+        "weapon_trait2_mod":parseFloat(weapon_trait3_mod.replace(",","").replace(".","")),
+        "weapon_trait3_type":transformWeaponTraitType(weapon_trait2_type),
+        "weapon_trait3_mod":parseFloat(weapon_trait3_mod.replace(",","").replace(".","")),
         "bonus_power":0
     }
     return weapon;
@@ -156,6 +176,32 @@ function calculateEvaluatedAttributeTotal(char_type, weapon){
             break;
         default:
             evaluatedAttributeTotal += weapon.weapon_trait1_mod * 0.0025;
+            break;
+    }
+    switch(weapon.weapon_trait2_type){
+        case "pwr":
+            evaluatedAttributeTotal += weapon.weapon_trait2_mod * 0.002575;
+            break;
+        case char_type:
+            evaluatedAttributeTotal += weapon.weapon_trait2_mod * 0.002675;
+            break;
+        case "none":
+            break;
+        default:
+            evaluatedAttributeTotal += weapon.weapon_trait2_mod * 0.0025;
+            break;
+    }
+    switch(weapon.weapon_trait3_type){
+        case "pwr":
+            evaluatedAttributeTotal += weapon.weapon_trait3_mod * 0.002575;
+            break;
+        case char_type:
+            evaluatedAttributeTotal += weapon.weapon_trait3_mod * 0.002675;
+            break;
+        case "none":
+            break;
+        default:
+            evaluatedAttributeTotal += weapon.weapon_trait3_mod * 0.0025;
             break;
     }
     return evaluatedAttributeTotal;
