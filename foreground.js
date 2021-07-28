@@ -41,8 +41,8 @@ function getWeapon(){
         "weapon_trait1_type":transformWeaponTraitType(weapon_trait1_type),
         "weapon_trait1_mod":parseFloat(weapon_trait1_mod.replace(",","").replace(".","")),
         "weapon_trait2_type":transformWeaponTraitType(weapon_trait2_type),
-        "weapon_trait2_mod":parseFloat(weapon_trait3_mod.replace(",","").replace(".","")),
-        "weapon_trait3_type":transformWeaponTraitType(weapon_trait2_type),
+        "weapon_trait2_mod":parseFloat(weapon_trait2_mod.replace(",","").replace(".","")),
+        "weapon_trait3_type":transformWeaponTraitType(weapon_trait3_type),
         "weapon_trait3_mod":parseFloat(weapon_trait3_mod.replace(",","").replace(".","")),
         "bonus_power":0
     }
