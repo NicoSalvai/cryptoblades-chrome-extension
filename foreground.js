@@ -18,6 +18,14 @@ function showProbs(){
 function getWeapon(){
     let aux_weapon = document.getElementsByClassName("weapon-icon-wrapper")[0];
     let weapon_element = aux_weapon.getElementsByClassName("trait")[0].childNodes[0].className.replace("-icon","");
+
+    let bonus_power_aux = aux_weapon.getElementsByClassName("bonus-power")[0].childNodes[0];
+    let PB = "";
+    if(bonus_power_aux.hasChildNodes()){
+        if(bonus_power_aux.childNodes[0].innerHTML.split(" ")[1] == "LB"){
+            PB = bonus_power_aux.childNodes[0].innerHTML.split(" ")[0];
+        }
+    }
     
     let weapon_trait1_type = aux_weapon.getElementsByClassName("stats")[0].childNodes[0].childNodes[0].className.split(" ")[2].replace("-icon","");
     let weapon_trait1_mod = aux_weapon.getElementsByClassName("stats")[0].childNodes[0].childNodes[1].innerHTML.split("+")[1];
@@ -44,7 +52,7 @@ function getWeapon(){
         "weapon_trait2_mod":parseFloat(weapon_trait2_mod.replace(",","").replace(".","")),
         "weapon_trait3_type":transformWeaponTraitType(weapon_trait3_type),
         "weapon_trait3_mod":parseFloat(weapon_trait3_mod.replace(",","").replace(".","")),
-        "bonus_power":0
+        "bonus_power":(parseFloat(PB)*15)
     }
     return weapon;
 }
@@ -105,6 +113,7 @@ function calculateVictoryProbability(enemies, character, weapon){
 function calculateProbs(enemy, character, weapon){
     let evaluatedAttributeTotal = calculateEvaluatedAttributeTotal(character.char_type,weapon);
     let alignedPower = ((evaluatedAttributeTotal+1)*character.power)+weapon.bonus_power;
+    console.log(weapon.bonus_power);
 
     let final_power = alignedPower;
     if(character.char_type == weapon.weapon_element){
