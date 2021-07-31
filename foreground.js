@@ -20,7 +20,7 @@ function getWeapon(){
     let weapon_element = aux_weapon.getElementsByClassName("trait")[0].childNodes[0].className.replace("-icon","");
 
     let bonus_power_aux = aux_weapon.getElementsByClassName("bonus-power")[0].childNodes[0];
-    let PB = "";
+    let PB = "0";
     if(bonus_power_aux.hasChildNodes()){
         if(bonus_power_aux.childNodes[0].innerHTML.split(" ")[1] == "LB"){
             PB = bonus_power_aux.childNodes[0].innerHTML.split(" ")[0];
