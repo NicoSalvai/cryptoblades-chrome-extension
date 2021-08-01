@@ -9,7 +9,7 @@ chrome.storage.local.get("name", data => {
 });
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if(changeInfo.status === "complete" && tab.url === "https://app.cryptoblades.io/#/combat") {
+    if(changeInfo.status === "complete" && tab.url.includes("https://app.cryptoblades.io/#/")) {
         chrome.scripting.executeScript({
             target: {tabId: tabId},
             files: ["./foreground.js"]

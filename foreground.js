@@ -317,6 +317,7 @@ function printXps(characters){
         if(element.innerHTML.includes("<br>")){
             element.innerHTML = element.innerHTML.split("<br>")[0];
         }
-        element.innerHTML += "<br> XP to level " + characters[j].next_milestone_level + ": " + characters[j].xp_to_level;
+        element.innerHTML += "<br>XP to level " + characters[j].next_milestone_level + ": " + characters[j].xp_to_level +
+        "<br>Days to level " + characters[j].next_milestone_level + ": " + ((characters[j].xp_to_level/29.5)/7).toFixed(1);
     }
 }
