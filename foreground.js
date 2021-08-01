@@ -1,3 +1,28 @@
+// Main code
+element = document.getElementById("prob-calc-button-extension");
+if(typeof(element) == 'undefined' || element == null){
+    let character_name_span = document.getElementsByClassName("character-list")[0];
+
+    console.log("injected");
+
+    var li = document.createElement("li");
+    li.classList.add("char");
+    li.innerHTML = "<button id=\"prob-calc-button-extension\" type=\"button\" class=\"btn btn btn-primary btn-small btn-secondary\">" + "Prob</button>";
+    character_name_span.appendChild(li);
+
+    document.getElementById("prob-calc-button-extension").addEventListener("click", showProbs, false);
+
+    var li = document.createElement("li");
+    li.classList.add("char");
+    li.innerHTML = "<button id=\"exp-to-level-button-extension\" type=\"button\" class=\"btn btn btn-primary btn-small btn-secondary\">" + "XP</button>";
+    character_name_span.appendChild(li);
+
+    document.getElementById("exp-to-level-button-extension").addEventListener("click", showExpToLevel, false);
+}
+
+
+
+// Function to call on button click
 function showProbs(){
     console.log("event showProbs");
     if(document.getElementsByClassName("encounter-container").length > 0){
@@ -15,6 +40,7 @@ function showProbs(){
     }
 }
 
+// Get weapon information/stats
 function getWeapon(){
     let aux_weapon = document.getElementsByClassName("weapon-icon-wrapper")[0];
     let weapon_element = aux_weapon.getElementsByClassName("trait")[0].childNodes[0].className.replace("-icon","");
@@ -57,6 +83,8 @@ function getWeapon(){
     return weapon;
 }
 
+
+// transform weapon trait from short to real type
 function transformWeaponTraitType(weapon_trait1_type){
     switch(weapon_trait1_type){
         case "cha":
@@ -75,6 +103,8 @@ function transformWeaponTraitType(weapon_trait1_type){
     return weapon_trait1_type;
 }
 
+
+// Get character information
 function getChar(){
     let power = document.getElementsByClassName("subtext-stats")[0].childNodes[5].innerHTML;
     let char_type = document.getElementsByClassName("name bold character-name")[0].childNodes[1].className.split("-icon")[0];
@@ -85,6 +115,8 @@ function getChar(){
     return character
 }
 
+
+// Get enemies information
 function getEnemies(){
     let encounters = document.getElementsByClassName("encounter-container");
     let enemies = [];
@@ -223,16 +255,53 @@ function printProbs(enemy){
 
 
 
-element = document.getElementById("prob-calc-button-extension");
-if(typeof(element) == 'undefined' || element == null){
-    let character_name_span = document.getElementsByClassName("character-list")[0];
+function showExpToLevel(){
+    console.log("event showExpToLevel");
+    if(document.getElementsByClassName("character-list").length > 0){
+        let characters = getReducedCharacters();
+        printXps(characters);
+        console.log(characters);
+    }   
+}
 
-    console.log("injected");
 
-    var li = document.createElement("li");
-    li.classList.add("character");
-    li.innerHTML = "<button id=\"prob-calc-button-extension\" type=\"button\" class=\"btn btn btn-primary btn-small btn-secondary\">" + "Prob</button>";
-    character_name_span.appendChild(li);
+function getReducedCharacters(){
+    let charactersDOM = document.getElementsByClassName('character-list')[0].getElementsByClassName('character');
+    let characters = []
+    for(i = 0; i < charactersDOM.length; i++){
+        let level = parseInt(charactersDOM[i].getElementsByClassName('name-list')[0].innerHTML.split('Lv.')[1]);
+        let next_milestone_level = getNextLevelMilestone(level);
+        let xp_to_level = getXpToLevel(level, next_milestone_level);
+        let character = {
+            "level":level,
+            "next_milestone_level": next_milestone_level,
+            "xp_to_level": xp_to_level,
+            "htmlObject": charactersDOM[i]
+        }
+        characters.push(character);
+    }
+    return characters;
+}
 
-    document.getElementById("prob-calc-button-extension").addEventListener("click", showProbs, false);
+function getNextLevelMilestone(current_level){
+    return (parseInt((parseInt(current_level)/10) + "")*10)+11;
+}
+
+function getXpToLevel(current_level, level_to){
+    let xp_to_level_const = [16,17,18,19,20,22,24,26,28,30,33,36,39,42,46,50,55,60,66,72,79,86,94,103,113,124,136,149,163,178,194,211,229,248,268,289,311,334,358,383,409,436,464,493,523,554,586,619,653,688,724,761,799,838,878,919,961,1004,1048,1093,1139,1186,1234,1283,1333,1384,1436,1489,1543,1598,1654,1711,1769,1828,1888,1949,2011,2074,2138,2203,2269,2336,2404,2473,2543,2614,2686,2759,2833,2908,2984,3061,3139,3218,3298,3379,3461,3544,3628,3713,3799,3886,3974,4063,4153,4244,4336,4429,4523,4618,4714,4811,4909,5008,5108,5209,5311,5414,5518,5729,5836,5944,6053,6163,6274,6386,6499,6613,6728,6844,6961,7079,7198,7318,7439,7561,7684,7808,7933,8059,8186,8314,8443,8573,8704,8836,8969,9103,9374,9511,9649,9788,9928,10069,10211,10354,10498,10643,10789,10936,11084,11233,11383,11534,11686,11839,11993,12148,12304,12461,12619,12778,12938,13099,13261,13424,13588,13919,14086,14254,14423,14593,14764,14936,15109,15283,15458,15634,15811,15989,16168,16348,16529,16711,16894,17078,17263,17449,17636,17824,18013,18203,18394,18586,18779,18973,19364,19561,19759,19958,20158,20359,20561,20764,20968,21173,21379,21586,21794,22003,22213,22424,22636,22849,23063,23278,23494,23711,23929,24148,24368,24589,24811,25034,25258,25709,25936,26164,26393,26623,26854,27086,27319,27553,27788,28024,28261,28499,28738]
+    let accum = 0;
+    for(j = current_level; j < level_to; j++){
+        accum+=xp_to_level_const[j-1];
+    }
+    return accum;
+}
+
+function printXps(characters){
+    for(j = 0; j < characters.length; j++){
+        let element = characters[j].htmlObject.getElementsByClassName("name-list")[0];
+        if(element.innerHTML.includes("<br>")){
+            element.innerHTML = element.innerHTML.split("<br>")[0];
+        }
+        element.innerHTML += "<br> XP to level " + characters[j].next_milestone_level + ": " + characters[j].xp_to_level;
+    }
 }
