@@ -267,6 +267,7 @@ function showExpToLevel(){
 
 function getReducedCharacters(){
     let charactersDOM = document.getElementsByClassName('character-list')[0].getElementsByClassName('character');
+    let charactersDOMHL = document.getElementsByClassName('character-list')[0].getElementsByClassName('character-highlight');
     let characters = []
     for(i = 0; i < charactersDOM.length; i++){
         let level = parseInt(charactersDOM[i].getElementsByClassName('name-list')[0].innerHTML.split('Lv.')[1]);
@@ -280,6 +281,20 @@ function getReducedCharacters(){
         }
         characters.push(character);
     }
+
+    for(i = 0; i < charactersDOMHL.length; i++){
+        let level = parseInt(charactersDOMHL[i].getElementsByClassName('name-list')[0].innerHTML.split('Lv.')[1]);
+        let next_milestone_level = getNextLevelMilestone(level);
+        let xp_to_level = getXpToLevel(level, next_milestone_level);
+        let character = {
+            "level":level,
+            "next_milestone_level": next_milestone_level,
+            "xp_to_level": xp_to_level,
+            "htmlObject": charactersDOMHL[i]
+        }
+        characters.push(character);
+    }
+    
     return characters;
 }
 
