@@ -1,0 +1,42 @@
+#support-container {
+    border: 1px solid;
+    border-color: #c9ad12;
+    top: 10px;
+    right: 25px;
+  }
+
+body {
+    background-color: #29292a;
+    height: fit-content;
+}
+
+p, h2 {
+    color: #9e8a57;
+    text-align: center;
+}
+
+#support-address{
+    color: #22a7be;
+}
+
+.btn {
+    background-color: #29292a;
+    border: 1px solid white;
+    border-radius: 100%;
+    color: white; 
+    padding: 12px 16px;
+    font-size: 16px; 
+    cursor: pointer; 
+}
+  
+.btn:hover {
+    background-color: grey;
+}
+
+#contact-container{
+    height: 35px;
+}
+
+html {
+    height: fit-content;
+}
