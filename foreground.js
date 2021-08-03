@@ -268,15 +268,25 @@ function showExpToLevel(){
 function getReducedCharacters(){
     let charactersDOM = document.getElementsByClassName('character-list')[0].getElementsByClassName('character');
     let charactersDOMHL = document.getElementsByClassName('character-list')[0].getElementsByClassName('character-highlight');
+    let xp_to_claim_list_htmlobject = document.getElementsByTagName('u');
     let characters = []
     for(i = 0; i < charactersDOM.length; i++){
         let level = parseInt(charactersDOM[i].getElementsByClassName('name-list')[0].innerHTML.split('Lv.')[1]);
         let next_milestone_level = getNextLevelMilestone(level);
         let xp_to_level = getXpToLevel(level, next_milestone_level);
+        let name = charactersDOM[i].getElementsByClassName('name-list')[0].innerHTML.split(' Lv.')[0].trim();
+        let xp_to_claim = parseInt(getXpToClainForCharName(name,xp_to_claim_list_htmlobject))
+        let xp_needed = xp_to_level - xp_to_claim;
+        if(xp_needed < 0){
+            xp_needed = 0;
+        }
         let character = {
+            "name": name,
+            "xp_to_claim":xp_to_claim,
             "level":level,
             "next_milestone_level": next_milestone_level,
             "xp_to_level": xp_to_level,
+            "xp_needed": xp_needed,
             "htmlObject": charactersDOM[i]
         }
         characters.push(character);
@@ -286,16 +296,33 @@ function getReducedCharacters(){
         let level = parseInt(charactersDOMHL[i].getElementsByClassName('name-list')[0].innerHTML.split('Lv.')[1]);
         let next_milestone_level = getNextLevelMilestone(level);
         let xp_to_level = getXpToLevel(level, next_milestone_level);
+        let name = charactersDOMHL[i].getElementsByClassName('name-list')[0].innerHTML.split(' Lv.')[0].trim();
+        let xp_to_claim = parseInt(getXpToClainForCharName(name,xp_to_claim_list_htmlobject))
+        let xp_needed = xp_to_level - xp_to_claim;
+        if(xp_needed < 0){
+            xp_needed = 0;
+        }
         let character = {
+            "name": name,
+            "xp_to_claim":xp_to_claim,
             "level":level,
             "next_milestone_level": next_milestone_level,
             "xp_to_level": xp_to_level,
+            "xp_needed": xp_needed,
             "htmlObject": charactersDOMHL[i]
         }
         characters.push(character);
     }
     
     return characters;
+}
+
+function getXpToClainForCharName(char_name, xp_to_claim_list_htmlobject){
+    for(k = 0; k < xp_to_claim_list_htmlobject.length; k++){
+        if(xp_to_claim_list_htmlobject[k].innerHTML.includes(char_name)){
+            return xp_to_claim_list_htmlobject[k].innerHTML.split(" ")[2];
+        }
+    }
 }
 
 function getNextLevelMilestone(current_level){
@@ -318,6 +345,6 @@ function printXps(characters){
             element.innerHTML = element.innerHTML.split("<br>")[0];
         }
         element.innerHTML += "<br>XP to level " + characters[j].next_milestone_level + ": " + characters[j].xp_to_level +
-        "<br>Days to level " + characters[j].next_milestone_level + ": " + ((characters[j].xp_to_level/29.5)/7).toFixed(1);
+        "<br>Claim XP in " + characters[j].next_milestone_level + ": " + ((characters[j].xp_needed/29.5)/7).toFixed(1) + " Days";
     }
 }
