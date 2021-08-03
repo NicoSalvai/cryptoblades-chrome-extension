@@ -7,15 +7,15 @@ if(typeof(element) == 'undefined' || element == null){
 
     var li = document.createElement("li");
     li.classList.add("char");
-    li.innerHTML = "<button id=\"prob-calc-button-extension\" type=\"button\" class=\"btn btn btn-primary btn-small btn-secondary\">" + "Prob</button>";
-    character_name_span.appendChild(li);
+    li.innerHTML = "<button id=\"prob-calc-button-extension\" type=\"button\" class=\"btn btn btn-primary btn-small btn-secondary\" style=\"height:100%;margin-left:3px;margin-right:3px;\">" + "Prob</button>";
+    character_name_span.prepend(li);
 
     document.getElementById("prob-calc-button-extension").addEventListener("click", showProbs, false);
 
     var li = document.createElement("li");
     li.classList.add("char");
-    li.innerHTML = "<button id=\"exp-to-level-button-extension\" type=\"button\" class=\"btn btn btn-primary btn-small btn-secondary\">" + "XP</button>";
-    character_name_span.appendChild(li);
+    li.innerHTML = "<button id=\"exp-to-level-button-extension\" type=\"button\" class=\"btn btn btn-primary btn-small btn-secondary\" style=\"height:100%;margin-left:3px;margin-right:3px;\">" + "XP</button>";
+    character_name_span.prepend(li);
 
     document.getElementById("exp-to-level-button-extension").addEventListener("click", showExpToLevel, false);
 }
