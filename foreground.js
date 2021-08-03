@@ -343,8 +343,9 @@ function printXps(characters){
         let element = characters[j].htmlObject.getElementsByClassName("name-list")[0];
         if(element.innerHTML.includes("<br>")){
             element.innerHTML = element.innerHTML.split("<br>")[0];
-        }
+        } else {
         element.innerHTML += "<br>XP to level " + characters[j].next_milestone_level + ": " + characters[j].xp_to_level +
         "<br>Claim XP in " + characters[j].next_milestone_level + ": " + ((characters[j].xp_needed/29.5)/7).toFixed(1) + " Days";
+        }
     }
 }
