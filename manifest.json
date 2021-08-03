@@ -1,6 +1,6 @@
 {
-    "name":"Crypto Tools",
-    "description":"crypto-tools",
+    "name":"Crypto Blades Tools",
+    "description":"crypto-blades-tools",
     "version":"0.2.0",
     "manifest_version":3,
     "background":{
