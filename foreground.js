@@ -123,7 +123,7 @@ function getEnemies(){
     for(i = 0; i < encounters.length; i++){
         let htmlObject = encounters[i];
         let enemy_type = htmlObject.getElementsByClassName("encounter-element")[0].childNodes[0].className.split("-icon")[0];
-        let enemy_power = htmlObject.getElementsByClassName("encounter-power")[0].innerHTML.split(" ")[1];
+        let enemy_power = htmlObject.getElementsByClassName("encounter-power")[0].innerHTML.trim().split(" ")[0];
         let enemy = {
             "enemy_type":enemy_type,
             "enemy_power":parseFloat(enemy_power.replace(",","").replace(".","")),
