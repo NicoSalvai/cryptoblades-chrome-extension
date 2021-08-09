@@ -23,5 +23,5 @@
     },
     "options_page":"./options.html",
     "permissions":["activeTab", "tabs", "storage", "scripting"],
-    "host_permissions":["https://app.cryptoblades.io/#/*"]
+    "host_permissions":["https://app.cryptoblades.io/#/*","https://bladeknight.io/#/*"]
 }
